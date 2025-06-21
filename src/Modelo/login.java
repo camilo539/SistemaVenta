@@ -3,16 +3,16 @@ package Modelo;
 
 // Archivo el cual abarca lo que es la estructura para el ingreso del usuario, los datos.
 
-public class Login {
+public class login {
     private int id;
     private String nombre;
     private String correo;
     private String contraseña;
 
-    public Login() {  
+    public login() {  
     }
 
-    public Login(int id, String nombre, String correo, String contraseña) {
+    public login(int id, String nombre, String correo, String contraseña) {
         this.id = id;
         this.nombre = nombre;
         this.correo = correo;

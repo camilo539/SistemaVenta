@@ -4,20 +4,40 @@
  */
 package Vista;
 
+import Modelo.LoginDAO;
+import Modelo.login;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author camil
  */
 public class Login extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
+    login lg = new login();
+    LoginDAO login = new LoginDAO();
+    
     public Login() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-
+    
+    public  void validar () {
+        String correo = UsuarioLogin.getText();
+        String contraseña = String.valueOf(PasswordLogin.getPassword());
+        
+        if (!"".equals(correo) || !"".equals(contraseña)) {
+            lg = login.log(correo, contraseña);
+            if (lg.getCorreo()!= null && lg.getContraseña() != null) {
+                Sistema sis = new Sistema(); 
+                sis.setVisible(true);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Correo o la contraseña incorrecta");
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,6 +93,11 @@ public class Login extends javax.swing.JFrame {
         EntrarLogin.setBackground(new java.awt.Color(204, 204, 255));
         EntrarLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         EntrarLogin.setText("Entrar");
+        EntrarLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EntrarLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -81,10 +106,10 @@ public class Login extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(PasswordLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel4Layout.createSequentialGroup()
-                            .addGap(61, 61, 61)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(PasswordLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -120,6 +145,10 @@ public class Login extends javax.swing.JFrame {
     private void UsuarioLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuarioLoginActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_UsuarioLoginActionPerformed
+
+    private void EntrarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EntrarLoginActionPerformed
+        validar();
+    }//GEN-LAST:event_EntrarLoginActionPerformed
 
     /**
      * @param args the command line arguments
