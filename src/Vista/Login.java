@@ -13,7 +13,8 @@ import javax.swing.JOptionPane;
  * @author camil
  */
 public class Login extends javax.swing.JFrame {
-
+    
+    // Creando nuevas instancias
     login lg = new login();
     LoginDAO login = new LoginDAO();
     
@@ -22,6 +23,7 @@ public class Login extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     
+    // Esta funcion sirve para confirmar o denegar el acceso al usuario desde el login
     public  void validar () {
         String correo = UsuarioLogin.getText();
         String contraseña = String.valueOf(PasswordLogin.getPassword());

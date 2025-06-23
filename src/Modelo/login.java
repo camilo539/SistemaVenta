@@ -1,7 +1,7 @@
 
 package Modelo;
 
-// Archivo el cual abarca lo que es la estructura para el ingreso del usuario, los datos.
+// Abarca para crear el objeto login
 
 public class login {
     private int id;

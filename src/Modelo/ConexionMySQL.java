@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+// Conexion del software y la base de datos
+
 public class ConexionMySQL {
     Connection con;
     public Connection getConnection() {
