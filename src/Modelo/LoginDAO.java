@@ -14,7 +14,7 @@ public class LoginDAO {
     
     public login log(String correo, String contraseña) {
         login l = new login ();
-        String sql = "SELECT * FROM 'usuarios' WHERE correo = ? AND contraseña = ?";
+        String sql = "SELECT * FROM usuarios WHERE correo = ? AND contraseña = ?";
         
         try {
             con = cn.getConnection();

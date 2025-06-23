@@ -9,7 +9,7 @@ public class ConexionMySQL {
     Connection con;
     public Connection getConnection() {
         try {
-            String myBD = "jdbc:mysql://localhost:3306/sistemaventa?serverTimezone=UTC-5";
+            String myBD = "jdbc:mysql://localhost:3306/sistemaventa?serverTimezone=UTC";
             con = DriverManager.getConnection(myBD, "root", "");
             return con;
         } catch(SQLException e) {
