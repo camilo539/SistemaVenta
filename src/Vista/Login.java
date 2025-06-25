@@ -14,8 +14,8 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
     
-    // Creando nuevas instancias
-    login lg = new login();
+    // Creando nuevas instancias.
+    login lg = new login(); 
     LoginDAO login = new LoginDAO();
     
     public Login() {
@@ -23,18 +23,19 @@ public class Login extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     
-    // Esta funcion sirve para confirmar o denegar el acceso al usuario desde el login
-    public  void validar () {
-        String correo = UsuarioLogin.getText();
-        String contraseña = String.valueOf(PasswordLogin.getPassword());
+    // Esta funcion sirve para confirmar o denegar el acceso al usuario desde el login.
+    public  void validar () { // Metodo que no retorna nada.
+        String correo = UsuarioLogin.getText();  // Obtiene el texto (correo electrónico) que el usuario ingresó en un campo de texto llamado UsuarioLogin. 
+        String contraseña = String.valueOf(PasswordLogin.getPassword()); // El String.valueof convierte el array de caracteres a un String.
         
-        if (!"".equals(correo) || !"".equals(contraseña)) {
-            lg = login.log(correo, contraseña);
-            if (lg.getCorreo()!= null && lg.getContraseña() != null) {
-                Sistema sis = new Sistema(); 
-                sis.setVisible(true);
-                dispose();
-            } else {
+        if (!"".equals(correo) || !"".equals(contraseña)) { // Confirmando que no este vacio el correo ni la contraseña.
+            lg = login.log(correo, contraseña);  // Llamando al metodo log de un objeto para las credenciales.
+            if (lg.getCorreo()!= null && lg.getContraseña() != null) { // Verifica si contiene valores no nulos para correo y la contraseña.
+                Sistema sis = new Sistema(); // Instancia del sistema principal.
+                sis.setVisible(true); // Hace visible la ventana principal.
+                dispose(); // Cierra la ventana del login
+            } else { 
+                // Por si pasa hay un error en el ingreso
                 JOptionPane.showMessageDialog(null, "Correo o la contraseña incorrecta");
             }
         }

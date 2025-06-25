@@ -3,17 +3,24 @@ package Modelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 
 public class ClienteDAO {
-    ConexionMySQL cn = new ConexionMySQL();
-    Connection con;
-    PreparedStatement ps;
+    ConexionMySQL cn = new ConexionMySQL(); // Se crea una instancia de la clase ConexionMySQL, que se utilizará para obtener la conexión a la base de datos.
+    Connection con; // Variable de tipo Connection que se utilizará para establecer la conexión a la base de datos.
+    PreparedStatement ps; // Variable de tipo PreparedStatementque se utilizará para ejecutar consultas SQL.
+    ResultSet rs; // Variable que almacena los datos de la variable como si fuera una tabla.
     
     public boolean RegistrarCliente (Cliente cl) {
-        String sql = "INSERT INTO clientes (cedula, nombre, telefono, direccion) VALUES (?,?,?,?)";
-        try {
+        String sql = "INSERT INTO clientes (cedula, nombre, telefono, direccion) VALUES (?,?,?,?)"; // Variable de tipo PreparedStatementque se utilizará para ejecutar consultas SQL.
+        try { // Manejar algun tipo de excepcion al intentar la conexion con la base de datos.
+            
+            // Haciendo la conexion a la base de datos sobre el cliente.
+            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, cl.getCedula());
@@ -22,15 +29,46 @@ public class ClienteDAO {
             ps.setString(4, cl.getDireccion());
             ps.execute();
         } catch (SQLException e) {
+            // El metodo devuelve un error para indicar que el registro del cliente fallo.
             JOptionPane.showMessageDialog(null, e.toString());
             return false;
         } finally {
             try {
+                // Haciendo un cierre a la conexion independientemente de si fallo o no fallo el registro.
                 con.close();
             } catch (SQLException e) {
                 System.out.println(e.toString());
             }
         }
-        return false;
+        // Finalmente, si el registro se realizó correctamente, el método devuelve true para indicar que el registro fue exitoso.
+        return true;
+    }
+    
+    public List ListarCliente () {
+        List<Cliente> ListaCl = new ArrayList();
+        String sql = "SELECT * FROM clientes";
+        try {
+            
+            // Conexion para la base de datos clientes.
+            
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                
+                // Ciclo para recorrer la lista de clientes
+                
+                Cliente cl = new Cliente();
+                cl.setId(rs.getInt("id"));
+                cl.setCedula(rs.getInt("cedula"));
+                cl.setNombre(rs.getString("nombre"));
+                cl.setTelefono(rs.getString("telefono"));
+                cl.setDireccion(rs.getString("direccion"));
+                ListaCl.add(cl); // Agregando todos los datos a clientes
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString()); // Imprimir un error si falla el registro.
+        }
+        return ListaCl; // Retornando la lista clientes
     }
 }

@@ -6,8 +6,10 @@ package Vista;
 
 import Modelo.Cliente;
 import Modelo.ClienteDAO;
-import java.util.Set;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -17,9 +19,41 @@ public class Sistema extends javax.swing.JFrame {
 
     Cliente cl = new Cliente();
     ClienteDAO client = new ClienteDAO();
+    DefaultTableModel modelo = new DefaultTableModel();
     public Sistema() {
         initComponents();
         this.setLocationRelativeTo(null); // Sirve para centrar el software
+    }
+    
+    public void ListarCliente () { // Metodo para no retornar ningun valor.
+        List<Cliente> ListarCl = client.ListarCliente(); // Metodo que devuelve una lista de clientes.
+        modelo = (DefaultTableModel) tableCliente.getModel(); // Esto permite manipular las filas y columnas de la tabla.
+        Object[] ob = new Object[5]; // Un arreglo que crea capacidad para 5 objetos.
+        
+        //  Bucle que itera una lista de clientes.
+        
+        for (int i = 0; i < ListarCl.size(); i++) {
+            
+            // Valores de los arreglos que se habian creado antes.
+            
+            ob[0] = ListarCl.get(i).getId();
+            ob[1] = ListarCl.get(i).getCedula();
+            ob[2] = ListarCl.get(i).getNombre();
+            ob[3] = ListarCl.get(i).getTelefono();
+            ob[4] = ListarCl.get(i).getDireccion();
+            modelo.addRow(ob); // Esto agrega los datos del cliente a la tabla.
+        }
+        tableCliente.setModel(modelo); // Estableciendo modelo actualizado de la tablaCliente.
+    }
+    
+    public void LimpiarTabla() { // Metodo que no retornada nada.
+        
+        // Bucle para iterar las filas del modelo de la tabla
+        
+        for (int i = 0; i < modelo.getRowCount(); i++) { // El "model.getRowCount" obtiene el numero actual de las filas en el modelo de tabla.
+            modelo.removeRow(i); // Elimina la fila en la posicion i
+            i = i - 1; // Disminuye en 1 despues de eliminar una fila y sino decrementa se saltaria la siguiente fila.
+        }
     }
 
     /**
@@ -159,6 +193,11 @@ public class Sistema extends javax.swing.JFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cliente.png"))); // NOI18N
         jButton2.setText("Clientes");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/proveedor.png"))); // NOI18N
         jButton3.setText("Proveedor");
@@ -1026,16 +1065,19 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTelefonoClienteActionPerformed
 
     private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
-        //Boton Guardar
+        
         if (!"".equals(txtCedulaCliente.getText()) || !"".equals(txtNombreCliente.getText()) || !"".equals(txtTelefonoCliente.getText()) || !"".equals(txtDireccionCliente.getText())) {
-          cl.setCedula(Integer.parseInt(txtCedulaCliente.getText()));
-          cl.setNombre(txtNombreCliente.getText());
-          cl.setTelefono(txtTelefonoCliente.getText());
-          cl.setDireccion(txtDireccionCliente.getText());
-          client.RegistrarCliente(cl);
-          JOptionPane.showMessageDialog(null, "Cliente Registrado");
+          cl.setCedula(Integer.parseInt(txtCedulaCliente.getText())); // Cambiando el valor a entero y verificandolo en la base de datos si esta correcto.
+          cl.setNombre(txtNombreCliente.getText()); // Cambiando el valor a String y verificandolo en la base de datos si esta correcto.
+          cl.setTelefono(txtTelefonoCliente.getText()); // Cambiando el valor a entero y verificandolo en la base de datos si esta correcto.
+          cl.setDireccion(txtDireccionCliente.getText()); // Cambiando el valor a String y verificandolo en la base de datos si esta correcto
+          client.RegistrarCliente(cl); // Llama al metodo y lo registra.
+          JOptionPane.showMessageDialog(null, "Cliente Registrado"); // Cuadro de texto que confirma que el cliente fue registrado.
         }else {
-            JOptionPane.showMessageDialog(null, "Los campos están vacíos");
+            
+            // Si los campos estan vacios
+            
+            JOptionPane.showMessageDialog(null, "Los campos están vacíos o no están correctos los datos. "); 
         }  
     }//GEN-LAST:event_btnGuardarClienteActionPerformed
 
@@ -1046,6 +1088,12 @@ public class Sistema extends javax.swing.JFrame {
     private void jTextField17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField17ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField17ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        LimpiarTabla(); 
+        ListarCliente();
+        jTabbedPane1.setSelectedIndex(1); // Cambia la pestaña en la aplicacion de JTabbedPane y el indice "1".
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

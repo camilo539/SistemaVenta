@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// Logica para autenticar al usuario
+
 
 public class LoginDAO {
     Connection con;
@@ -15,11 +15,14 @@ public class LoginDAO {
     ConexionMySQL cn = new ConexionMySQL();
     
     public login log(String correo, String contraseña) {
-        login l = new login ();
-        String sql = "SELECT * FROM usuarios WHERE correo = ? AND contraseña = ?";
+        login l = new login (); // Creando nueva instancia. 
+        String sql = "SELECT * FROM usuarios WHERE correo = ? AND contraseña = ?"; // Variable de tipo PreparedStatementque se utilizará para ejecutar consultas SQL.
         
-        try {
-            con = cn.getConnection();
+        try { // Manejo de excepcion
+            
+            // Conexion para la base de datos sobre el login.
+            
+            con = cn.getConnection(); 
             ps = con.prepareStatement(sql);
             ps.setString(1, correo);
             ps.setString(2, contraseña);
@@ -32,8 +35,8 @@ public class LoginDAO {
             }
             
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            System.out.println(e.toString()); // Imprimiendo el error por si falla el metdodo.
         }
-        return l;
+        return l; // Retornando el login.
     }
 }
