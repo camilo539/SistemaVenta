@@ -97,4 +97,37 @@ public class ClienteDAO {
         }
     }
     
+    public boolean ModificarCliente (Cliente cl) { // Metodo booleano con el parametro de los clientes.
+        String sql = "UPDATE clientes SET cedula=?, nombre=?, telefono=?, direccion=? WHERE id=?"; // Consulta SQL de los datos sobre los clientes.
+        try { // Manejo de excepciones
+            ps = con.prepareStatement(sql); // Conexion con la base de datos.
+            
+            // Metodo para actualizar  los datos del cliente.
+            
+            ps.setInt(1, cl.getCedula());
+            ps.setString(2, cl.getNombre());
+            ps.setString(3, cl.getTelefono());
+            ps.setString(4, cl.getDireccion());
+            ps.setInt(5, cl.getId());
+            ps.execute(); // Ejecutando la consulta SQL.
+            return true; // Retornar true si la operacion es exitosa.
+        } catch(SQLException e) {
+            
+            // Manejo de excepciones por si la conexion es erronea.
+            
+            System.out.println(e.toString());
+            return false; // Retornar false cuando sea erronea la conexion.
+        } finally { // Finally que se ejecuta sin importar si es true o false.
+            try {
+                
+                // Cierre de la conexion
+                
+                con.close();
+            } catch(SQLException ex) {
+                // Excepcion que imprime el error en la consola.
+                System.out.println(ex.toString());
+            }
+        }
+    }
+    
 }
