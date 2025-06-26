@@ -16,13 +16,15 @@ import javax.swing.table.DefaultTableModel;
  * @author camil
  */
 public class Sistema extends javax.swing.JFrame {
-
+ 
+    // Creando instancias
+    
     Cliente cl = new Cliente();
     ClienteDAO client = new ClienteDAO();
     DefaultTableModel modelo = new DefaultTableModel();
     public Sistema() {
         initComponents();
-        this.setLocationRelativeTo(null); // Sirve para centrar el software
+        this.setLocationRelativeTo(null); // Sirve para centrar el software.
     }
     
     public void ListarCliente () { // Metodo para no retornar ningun valor.
@@ -461,10 +463,22 @@ public class Sistema extends javax.swing.JFrame {
 
             },
             new String [] {
-                "NIT", "NOMBRE", "TELEFONO", "DIRECCION"
+                "ID", "CEDULA", "NOMBRE", "TELEFONO", "DIRECCION"
             }
         ));
+        tableCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableClienteMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tableCliente);
+        if (tableCliente.getColumnModel().getColumnCount() > 0) {
+            tableCliente.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tableCliente.getColumnModel().getColumn(1).setPreferredWidth(50);
+            tableCliente.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tableCliente.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tableCliente.getColumnModel().getColumn(4).setPreferredWidth(100);
+        }
 
         btnGuardarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
         btnGuardarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -479,6 +493,11 @@ public class Sistema extends javax.swing.JFrame {
 
         btnBorrarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/borrar.png"))); // NOI18N
         btnBorrarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBorrarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarClienteActionPerformed(evt);
+            }
+        });
 
         btnNuevoRegistroCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevo.png"))); // NOI18N
         btnNuevoRegistroCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -618,10 +637,17 @@ public class Sistema extends javax.swing.JFrame {
 
             },
             new String [] {
-                "NIT", "NOMBRE", "TELEFONO", "DIRECCION"
+                "ID", "CEDULA", "NOMBRE", "TELEFONO", "DIRECCION"
             }
         ));
         jScrollPane3.setViewportView(tableProveedor);
+        if (tableProveedor.getColumnModel().getColumnCount() > 0) {
+            tableProveedor.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tableProveedor.getColumnModel().getColumn(1).setPreferredWidth(50);
+            tableProveedor.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tableProveedor.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tableProveedor.getColumnModel().getColumn(4).setPreferredWidth(100);
+        }
 
         btnGuardarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
 
@@ -1072,6 +1098,9 @@ public class Sistema extends javax.swing.JFrame {
           cl.setTelefono(txtTelefonoCliente.getText()); // Cambiando el valor a entero y verificandolo en la base de datos si esta correcto.
           cl.setDireccion(txtDireccionCliente.getText()); // Cambiando el valor a String y verificandolo en la base de datos si esta correcto
           client.RegistrarCliente(cl); // Llama al metodo y lo registra.
+          LimpiarTabla();
+          LimpiarCliente();
+          ListarCliente();
           JOptionPane.showMessageDialog(null, "Cliente Registrado"); // Cuadro de texto que confirma que el cliente fue registrado.
         }else {
             
@@ -1094,6 +1123,33 @@ public class Sistema extends javax.swing.JFrame {
         ListarCliente();
         jTabbedPane1.setSelectedIndex(1); // Cambia la pestaña en la aplicacion de JTabbedPane y el indice "1".
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableClienteMouseClicked
+        int fila = tableCliente.rowAtPoint(evt.getPoint()); // Toma un objeto Point y devuelve el índice de la fila en la que se encuentra ese punto.
+        
+        /* Este método obtiene el valor de la celda en la fila 
+        seleccionada ( fila) y en la primera columna (índice) de la tabla. 
+        Se supone que esta columna contiene el ID del cliente */
+        
+        txtIdCliente.setText(tableCliente.getValueAt(fila, 0).toString());  
+        txtCedulaCliente.setText(tableCliente.getValueAt(fila, 1).toString());
+        txtNombreCliente.setText(tableCliente.getValueAt(fila, 2).toString());
+        txtTelefonoCliente.setText(tableCliente.getValueAt(fila, 3).toString());
+        txtDireccionCliente.setText(tableCliente.getValueAt(fila, 4).toString());
+    }//GEN-LAST:event_tableClienteMouseClicked
+
+    private void btnBorrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarClienteActionPerformed
+        if(!"".equals(txtIdCliente.getText())) { // Verificando que no este vacio el campo de texto.
+            int pregunta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar?"); // Mostrando un cuadro de dialogo para confirmar si quiere eliminar los datos de un cliente.
+            if (pregunta == 0) { 
+                int id = Integer.parseInt(txtIdCliente.getText()); // Convirtiendo el texto de campo a un int.
+                client.EliminarCliente(id); // Pasa el id para eliminar el registro correspondiente.
+                LimpiarTabla();
+                LimpiarCliente();
+                ListarCliente();
+            }
+        }
+    }//GEN-LAST:event_btnBorrarClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1244,4 +1300,15 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefonoCliente;
     private javax.swing.JTextField txtTelefonoProveedores;
     // End of variables declaration//GEN-END:variables
+    private void LimpiarCliente() { // Metodo privado que solo puede ser llamada en la misma clase y no retornada nada por el void.
+        
+        /* txtIdCliente: Se refiere a un campo de texto (probablemente un JTextField) que muestra el ID del cliente.
+           setText(""): Establece el texto del campo a una cadena vacía, lo que efectivamente limpia el campo. */
+        
+        txtIdCliente.setText("");
+        txtCedulaCliente.setText("");
+        txtNombreCliente.setText("");
+        txtTelefonoCliente.setText("");
+        txtDireccionCliente.setText("");
+    }
 }

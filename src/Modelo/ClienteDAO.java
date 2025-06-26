@@ -71,4 +71,30 @@ public class ClienteDAO {
         }
         return ListaCl; // Retornando la lista clientes
     }
+    
+    public boolean EliminarCliente(int id) { // Metodo booleano para eliminar cliente con el parametro id del cliente.
+        String sql = "DELETE FROM clientes WHERE id = ?"; // Secuencia SQL para eliminar el id del cliente.
+        try { // Manejo de excepciones.
+            ps = con.prepareStatement(sql); // Objeto con para la consulta SQL.
+            ps.setInt(1, id); // Se establece el valor del primer marcador de posición en la consulta SQL con el ID del cliente.
+            ps.execute(); // Ejecuta la consulta SQL.
+            return true; // Retornando true para indicar que la operacion es exitosa.
+        } catch (SQLException e) {
+            
+            // Captura  el error y lo imprime en la consola.
+            
+            System.out.println(e.toString());
+            return false; // Retornando false por si la consulta sale erronea.
+        } finally { // Bloque de codigo que se ejecute asi sea que sea exitosa la consulta o no.
+            try {
+                con.close(); // Cierre de conexion.
+            } catch(SQLException ex) {
+                
+                // Captura  el error y lo imprime en la consola.
+                
+                System.out.println(ex.toString());
+            }
+        }
+    }
+    
 }
