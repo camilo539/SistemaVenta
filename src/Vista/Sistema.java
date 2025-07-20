@@ -6,6 +6,8 @@ package Vista;
 
 import Modelo.Cliente;
 import Modelo.ClienteDAO;
+import Modelo.Proveedor;
+import Modelo.ProveedorDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +23,8 @@ public class Sistema extends javax.swing.JFrame {
     
     Cliente cl = new Cliente();
     ClienteDAO client = new ClienteDAO();
+    Proveedor pr = new Proveedor();
+    ProveedorDAO PrDAO = new ProveedorDAO();
     DefaultTableModel modelo = new DefaultTableModel();
     public Sistema() {
         initComponents();
@@ -47,6 +51,27 @@ public class Sistema extends javax.swing.JFrame {
             modelo.addRow(ob); // Esto agrega los datos del cliente a la tabla.
         }
         tableCliente.setModel(modelo); // Estableciendo modelo actualizado de la tablaCliente.
+    }
+    
+    public void ListarProveedor () { // Metodo para no retornar ningun valor.
+        List<Proveedor> ListarPr = PrDAO.ListarProveedor(); // Metodo que devuelve una lista de clientes.
+        modelo = (DefaultTableModel) tableProveedor.getModel(); // Esto permite manipular las filas y columnas de la tabla.
+        Object[] ob = new Object[5]; // Un arreglo que crea capacidad para 5 objetos.
+        
+        //  Bucle que itera una lista de clientes.
+        
+        for (int i = 0; i < ListarPr.size(); i++) {
+            
+            // Valores de los arreglos que se habian creado antes.
+            
+            ob[0] = ListarPr.get(i).getId();
+            ob[1] = ListarPr.get(i).getCedula();
+            ob[2] = ListarPr.get(i).getNombre();
+            ob[3] = ListarPr.get(i).getTelefono();
+            ob[4] = ListarPr.get(i).getDireccion();
+            modelo.addRow(ob); // Esto agrega los datos del cliente a la tabla.
+        }
+        tableProveedor.setModel(modelo); // Estableciendo modelo actualizado de la tablaCliente.
     }
     
     public void LimpiarTabla() { // Metodo que no retornada nada.
@@ -125,10 +150,10 @@ public class Sistema extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        txtCedulaProveedores = new javax.swing.JTextField();
-        txtNombreProveedores = new javax.swing.JTextField();
-        txtTelefonoProveedores = new javax.swing.JTextField();
-        txtDireccionProveedores = new javax.swing.JTextField();
+        txtCedulaProveedor = new javax.swing.JTextField();
+        txtNombreProveedor = new javax.swing.JTextField();
+        txtTelefonoProveedor = new javax.swing.JTextField();
+        txtDireccionProveedor = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         tableProveedor = new javax.swing.JTable();
         btnGuardarProveedor = new javax.swing.JButton();
@@ -139,6 +164,7 @@ public class Sistema extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
+        txtIdProveedor = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
@@ -204,6 +230,11 @@ public class Sistema extends javax.swing.JFrame {
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/proveedor.png"))); // NOI18N
         jButton3.setText("Proveedor");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/producto.png"))); // NOI18N
         jButton4.setText("Productos");
@@ -638,9 +669,9 @@ public class Sistema extends javax.swing.JFrame {
         jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel22.setText("DIRECCION");
 
-        txtCedulaProveedores.addActionListener(new java.awt.event.ActionListener() {
+        txtCedulaProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCedulaProveedoresActionPerformed(evt);
+                txtCedulaProveedorActionPerformed(evt);
             }
         });
 
@@ -652,6 +683,11 @@ public class Sistema extends javax.swing.JFrame {
                 "ID", "CEDULA", "NOMBRE", "TELEFONO", "DIRECCION"
             }
         ));
+        tableProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableProveedorMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tableProveedor);
         if (tableProveedor.getColumnModel().getColumnCount() > 0) {
             tableProveedor.getColumnModel().getColumn(0).setPreferredWidth(20);
@@ -662,10 +698,20 @@ public class Sistema extends javax.swing.JFrame {
         }
 
         btnGuardarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
+        btnGuardarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarProveedorActionPerformed(evt);
+            }
+        });
 
         btnActualizarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Actualizar.png"))); // NOI18N
 
         btnBorrarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/borrar.png"))); // NOI18N
+        btnBorrarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarProveedorActionPerformed(evt);
+            }
+        });
 
         btnNuevoRegistroProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevo.png"))); // NOI18N
 
@@ -685,6 +731,8 @@ public class Sistema extends javax.swing.JFrame {
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel26.setText("Nuevo Registro");
 
+        txtIdProveedor.setEditable(false);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -692,19 +740,6 @@ public class Sistema extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombreProveedores)
-                            .addComponent(txtCedulaProveedores)
-                            .addComponent(txtTelefonoProveedores)
-                            .addComponent(txtDireccionProveedores))
-                        .addGap(53, 53, 53))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -723,6 +758,24 @@ public class Sistema extends javax.swing.JFrame {
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombreProveedor)
+                                    .addComponent(txtCedulaProveedor)
+                                    .addComponent(txtTelefonoProveedor)
+                                    .addComponent(txtDireccionProveedor))
+                                .addGap(53, 53, 53))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(txtIdProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
@@ -730,24 +783,26 @@ public class Sistema extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(81, 81, 81)
+                .addGap(47, 47, 47)
+                .addComponent(txtIdProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel19)
-                            .addComponent(txtCedulaProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCedulaProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(28, 28, 28)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel20)
-                            .addComponent(txtNombreProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(33, 33, 33)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel21)
-                            .addComponent(txtTelefonoProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTelefonoProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel22)
-                            .addComponent(txtDireccionProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDireccionProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(39, 39, 39)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnGuardarProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1122,9 +1177,9 @@ public class Sistema extends javax.swing.JFrame {
         }  
     }//GEN-LAST:event_btnGuardarClienteActionPerformed
 
-    private void txtCedulaProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaProveedoresActionPerformed
+    private void txtCedulaProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaProveedorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCedulaProveedoresActionPerformed
+    }//GEN-LAST:event_txtCedulaProveedorActionPerformed
 
     private void jTextField17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField17ActionPerformed
         // TODO add your handling code here:
@@ -1198,8 +1253,53 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarClienteActionPerformed
 
     private void btnNuevoRegistroClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoRegistroClienteActionPerformed
-        LimpiarCliente();
+        
     }//GEN-LAST:event_btnNuevoRegistroClienteActionPerformed
+
+    private void btnGuardarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProveedorActionPerformed
+        if (!"".equals(txtCedulaProveedor.getText()) || !"".equals(txtNombreProveedor.getText()) || !"".equals(txtTelefonoProveedor.getText()) || !"".equals(txtDireccionProveedor.getText())) {
+          pr.setCedula(Integer.parseInt(txtCedulaProveedor.getText())); // Cambiando el valor a entero y verificandolo en la base de datos si esta correcto.
+          pr.setNombre(txtNombreProveedor.getText()); // Cambiando el valor a String y verificandolo en la base de datos si esta correcto.
+          pr.setTelefono(txtTelefonoProveedor.getText()); // Cambiando el valor a entero y verificandolo en la base de datos si esta correcto.
+          pr.setDireccion(txtDireccionProveedor.getText()); // Cambiando el valor a String y verificandolo en la base de datos si esta correcto
+          PrDAO.RegistrarProveedor(pr); // Llama al metodo y lo registra.      
+          LimpiarTabla();
+          LimpiarProveedor();
+          JOptionPane.showMessageDialog(null, "Proveedor Registrado"); // Cuadro de texto que confirma que el proveedor fue registrado.
+        } else {
+            JOptionPane.showMessageDialog(null, "Los campos están vacíos.");
+        }
+    }//GEN-LAST:event_btnGuardarProveedorActionPerformed
+
+    private void tableProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProveedorMouseClicked
+        int fila = tableProveedor.rowAtPoint(evt.getPoint());
+        txtIdProveedor.setText(tableProveedor.getValueAt(fila, 0).toString());
+        txtCedulaProveedor.setText(tableProveedor.getValueAt(fila, 1).toString());
+        txtNombreProveedor.setText(tableProveedor.getValueAt(fila, 2).toString());
+        txtTelefonoProveedor.setText(tableProveedor.getValueAt(fila, 3).toString());
+        txtDireccionProveedor.setText(tableProveedor.getValueAt(fila, 4).toString());
+    }//GEN-LAST:event_tableProveedorMouseClicked
+
+    private void btnBorrarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarProveedorActionPerformed
+        if (!"".equals(txtIdProveedor.getText())) {
+            int pregunta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar?");
+            if (pregunta == 0) {
+                int id = Integer.parseInt(txtIdProveedor.getText());
+                PrDAO.EliminarProveedor(id);
+                LimpiarTabla();
+                ListarProveedor();
+                LimpiarProveedor();
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione una fila");
+            }
+        }
+    }//GEN-LAST:event_btnBorrarProveedorActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        LimpiarTabla();
+        ListarProveedor();
+        jTabbedPane1.setSelectedIndex(2);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1335,24 +1435,25 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JTable tableVenta;
     private javax.swing.JTextField txtCantidadVenta;
     private javax.swing.JTextField txtCedulaCliente;
-    private javax.swing.JTextField txtCedulaProveedores;
+    private javax.swing.JTextField txtCedulaProveedor;
     private javax.swing.JTextField txtCodigoVenta;
     private javax.swing.JTextField txtDecscripcionVenta;
     private javax.swing.JTextField txtDireccionCliente;
-    private javax.swing.JTextField txtDireccionProveedores;
+    private javax.swing.JTextField txtDireccionProveedor;
     private javax.swing.JTextField txtIdCliente;
+    private javax.swing.JTextField txtIdProveedor;
     private javax.swing.JTextField txtNitVenta;
     private javax.swing.JTextField txtNombreCliente;
     private javax.swing.JTextField txtNombreClienteVenta;
-    private javax.swing.JTextField txtNombreProveedores;
+    private javax.swing.JTextField txtNombreProveedor;
     private javax.swing.JTextField txtPrecioVenta;
     private javax.swing.JTextField txtStockDisponibleVenta;
     private javax.swing.JTextField txtTelefonoCliente;
-    private javax.swing.JTextField txtTelefonoProveedores;
+    private javax.swing.JTextField txtTelefonoProveedor;
     // End of variables declaration//GEN-END:variables
     private void LimpiarCliente() { // Metodo privado que solo puede ser llamada en la misma clase y no retornada nada por el void.
         
-        /* txtIdCliente: Se refiere a un campo de texto (probablemente un JTextField) que muestra el ID del cliente.
+        /* txtCliente: Se refiere a un campo de texto que muestra el ID del cliente.
            setText(""): Establece el texto del campo a una cadena vacía, lo que efectivamente limpia el campo. */
         
         txtIdCliente.setText("");
@@ -1360,5 +1461,16 @@ public class Sistema extends javax.swing.JFrame {
         txtNombreCliente.setText("");
         txtTelefonoCliente.setText("");
         txtDireccionCliente.setText("");
+    }
+    
+    private void LimpiarProveedor() { // Metodo privado que solo puede ser llamada en la misma clase y no retornada nada por el void.
+        
+        /* txtProveedor: Se refiere a un campo de texto  que muestra el ID del cliente.
+           setText(""): Establece el texto del campo a una cadena vacía, lo que efectivamente limpia el campo. */
+        txtIdProveedor.setText("");
+        txtCedulaProveedor.setText("");
+        txtNombreProveedor.setText("");
+        txtTelefonoProveedor.setText("");
+        txtDireccionProveedor.setText("");
     }
 }

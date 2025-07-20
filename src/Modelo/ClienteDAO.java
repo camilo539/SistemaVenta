@@ -16,7 +16,7 @@ public class ClienteDAO {
     ResultSet rs; // Variable que almacena los datos de la variable como si fuera una tabla.
     
     public boolean RegistrarCliente (Cliente cl) {
-        String sql = "INSERT INTO clientes (cedula, nombre, telefono, direccion) VALUES (?,?,?,?)"; // Variable de tipo PreparedStatementque se utilizará para ejecutar consultas SQL.
+        String sql = "INSERT INTO clientes (cedula, nombre, telefono, direccion) VALUES (?,?,?,?)"; // La línea de código define una consulta SQL para insertar un nuevo registro en la tabla cliente.
         try { // Manejar algun tipo de excepcion al intentar la conexion con la base de datos.
             
             // Haciendo la conexion a la base de datos sobre el cliente.

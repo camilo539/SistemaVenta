@@ -98,6 +98,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Proveedor"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton4">
           <Properties>
@@ -846,22 +849,6 @@
                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabel19" max="32767" attributes="0"/>
-                                  <Component id="jLabel20" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel21" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel22" alignment="0" pref="71" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtNombreProveedores" max="32767" attributes="0"/>
-                                  <Component id="txtCedulaProveedores" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtTelefonoProveedores" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtDireccionProveedores" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jLabel25" max="32767" attributes="0"/>
@@ -886,6 +873,30 @@
                                   </Group>
                               </Group>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jLabel19" max="32767" attributes="0"/>
+                                  <Component id="jLabel20" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel21" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel22" alignment="0" pref="71" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="txtNombreProveedor" max="32767" attributes="0"/>
+                                          <Component id="txtCedulaProveedor" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtTelefonoProveedor" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtDireccionProveedor" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="txtIdProveedor" min="-2" pref="32" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
                       </Group>
                       <Component id="jScrollPane3" min="-2" pref="578" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
@@ -895,27 +906,29 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="81" pref="81" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                      <Component id="txtIdProveedor" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtCedulaProveedores" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtCedulaProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtNombreProveedores" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtNombreProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtTelefonoProveedores" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtTelefonoProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel22" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtDireccionProveedores" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtDireccionProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -979,16 +992,16 @@
                 <Property name="text" type="java.lang.String" value="DIRECCION"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtCedulaProveedores">
+            <Component class="javax.swing.JTextField" name="txtCedulaProveedor">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCedulaProveedoresActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCedulaProveedorActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtNombreProveedores">
+            <Component class="javax.swing.JTextField" name="txtNombreProveedor">
             </Component>
-            <Component class="javax.swing.JTextField" name="txtTelefonoProveedores">
+            <Component class="javax.swing.JTextField" name="txtTelefonoProveedor">
             </Component>
-            <Component class="javax.swing.JTextField" name="txtDireccionProveedores">
+            <Component class="javax.swing.JTextField" name="txtDireccionProveedor">
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane3">
               <AuxValues>
@@ -1041,6 +1054,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableProveedorMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -1050,6 +1066,9 @@
                   <Image iconType="3" name="/Imagenes/guardar.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarProveedorActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnActualizarProveedor">
               <Properties>
@@ -1064,6 +1083,9 @@
                   <Image iconType="3" name="/Imagenes/borrar.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBorrarProveedorActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnNuevoRegistroProveedor">
               <Properties>
@@ -1106,6 +1128,11 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="Nuevo Registro"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtIdProveedor">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
