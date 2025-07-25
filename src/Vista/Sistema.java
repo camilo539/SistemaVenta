@@ -705,6 +705,11 @@ public class Sistema extends javax.swing.JFrame {
         });
 
         btnActualizarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Actualizar.png"))); // NOI18N
+        btnActualizarProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarProveedorActionPerformed(evt);
+            }
+        });
 
         btnBorrarProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/borrar.png"))); // NOI18N
         btnBorrarProveedor.addActionListener(new java.awt.event.ActionListener() {
@@ -714,6 +719,11 @@ public class Sistema extends javax.swing.JFrame {
         });
 
         btnNuevoRegistroProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/nuevo.png"))); // NOI18N
+        btnNuevoRegistroProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoRegistroProveedorActionPerformed(evt);
+            }
+        });
 
         jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1306,6 +1316,32 @@ public class Sistema extends javax.swing.JFrame {
         ListarProveedor();
         jTabbedPane1.setSelectedIndex(2); // Se cambia la pestaña.
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnActualizarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarProveedorActionPerformed
+        if ("".equals(txtIdProveedor.getText())) { // Verifica si esta vacio y responde con un mensaje de seleccione una fila.
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        } else {
+            if (!"".equals(txtCedulaProveedor.getText()) || !"".equals(txtNombreProveedor.getText()) || !"".equals(txtTelefonoProveedor.getText()) || !"".equals(txtDireccionProveedor.getText())) { // Verificando si esta vacio.
+                
+                // Guardan las instancias en pr.
+                
+                pr.setCedula(Integer.parseInt(txtCedulaProveedor.getText()));
+                pr.setNombre(txtNombreProveedor.getText());
+                pr.setTelefono(txtTelefonoProveedor.getText());
+                pr.setDireccion(txtDireccionProveedor.getText());
+                pr.setId(Integer.parseInt(txtIdProveedor.getText()));
+                PrDAO.ModificarProveedor(pr); // LLama la funcion modificar proveedor.
+                LimpiarTabla();
+                ListarProveedor();
+                LimpiarProveedor();
+            }
+        }
+    }//GEN-LAST:event_btnActualizarProveedorActionPerformed
+
+    private void btnNuevoRegistroProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoRegistroProveedorActionPerformed
+        // TODO add your handling code here:
+        LimpiarProveedor();
+    }//GEN-LAST:event_btnNuevoRegistroProveedorActionPerformed
 
     /**
      * @param args the command line arguments

@@ -88,4 +88,31 @@ public class ProveedorDAO {
         }
     }
     
+    public boolean ModificarProveedor(Proveedor pr){ // Metodo booleano para modificar proveedor
+        String sql = "UPDATE proveedor SET cedula=?, nombre=?, telefono=?, direccion=? WHERE id=?"; // Consulta que permite modificar la tabla del proveedor.
+        try { // Bloque try catch
+            con = cn.getConnection(); // Obtiene una conexion a la base de datos.
+            ps = con.prepareStatement(sql); // Prepara la consulta SQL.
+            
+            // Insertando los datos para la consulta SQL.
+            
+            ps.setInt(1, pr.getCedula()); 
+            ps.setString(2, pr.getNombre());
+            ps.setString(3, pr.getTelefono());
+            ps.setString(4, pr.getDireccion());
+            ps.setInt(5, pr.getId());
+            ps.execute();
+            return true; // Retorna true.
+        } catch(SQLException e) {
+            System.out.println(e.toString()); // Imprime el error.
+            return false; // Retorna falso.
+        } finally { // Metodo final
+            try {
+                // Cierre de conexion
+                con.close();
+            }catch(SQLException e) {
+                System.out.println(e.toString()); // Imprime el error en la consola.
+            }
+        }
+    }
 }
