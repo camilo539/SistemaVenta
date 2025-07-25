@@ -68,23 +68,24 @@ public class ProveedorDAO {
         return ListaPr; // Retorna la ListaPr.
     }
     
-    public boolean EliminarProveedor(int id) {
-        String sql = "DELETE FROM proveedor WHERE id = ?";
-        try {
-            con = cn.getConnection();
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.execute();
-            return true;
+    public boolean EliminarProveedor(int id) { // Metodo booleano para eliminar proveedor.
+        String sql = "DELETE FROM proveedor WHERE id = ?"; // Consulta que permite eliminar el proveedor de la tabla proveedor.
+        try { // Bloque try.
+            con = cn.getConnection(); // Obtiene una conexion a la base de datos.
+            ps = con.prepareStatement(sql); // Prepara la consulta SQL.
+            ps.setInt(1, id); // Establece el valor del marcador ID del proveedor.
+            ps.execute(); // Ejecuta la consulta SQL.
+            return true; // Retorna true.
         }catch(SQLException e) {
-            System.out.println(e.toString());
-            return false;
-        } finally {
+            System.out.println(e.toString()); // Imprime el error en la consola.
+            return false; // Retorna falso.
+        } finally { // Asegura que se cierre la base de datos independientemente que ocurra el try o el catch.
             try {
-                con.close();
-            } catch (SQLException e) {
-                System.out.println(e.toString());
+                con.close(); // Intenta cerrar la conexion.
+            } catch (SQLException e) { // 
+                System.out.println(e.toString()); // Imprime el error en la consola.
             }
         }
     }
+    
 }

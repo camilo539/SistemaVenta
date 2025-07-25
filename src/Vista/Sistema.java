@@ -1272,7 +1272,12 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarProveedorActionPerformed
 
     private void tableProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProveedorMouseClicked
-        int fila = tableProveedor.rowAtPoint(evt.getPoint());
+        int fila = tableProveedor.rowAtPoint(evt.getPoint()); // Toma un objeto Point y devuelve el índice de la fila en la que se encuentra ese punto.
+        
+        /* Este método obtiene el valor de la celda en la fila 
+        seleccionada ( fila) y en la primera columna (índice) de la tabla. 
+        Se supone que esta columna contiene el ID del proveedor */
+        
         txtIdProveedor.setText(tableProveedor.getValueAt(fila, 0).toString());
         txtCedulaProveedor.setText(tableProveedor.getValueAt(fila, 1).toString());
         txtNombreProveedor.setText(tableProveedor.getValueAt(fila, 2).toString());
@@ -1281,15 +1286,16 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_tableProveedorMouseClicked
 
     private void btnBorrarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarProveedorActionPerformed
-        if (!"".equals(txtIdProveedor.getText())) {
-            int pregunta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar?");
-            if (pregunta == 0) {
-                int id = Integer.parseInt(txtIdProveedor.getText());
-                PrDAO.EliminarProveedor(id);
+        if (!"".equals(txtIdProveedor.getText()))  { // Verifica si no esta vacio.
+            int pregunta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar?"); // Ventana emergente con las opciones si, no, cancelar.
+            if (pregunta == 0) { // el "0" es igual a si.
+                int id = Integer.parseInt(txtIdProveedor.getText()); // Convierte el texto del campo a un numero entero.
+                PrDAO.EliminarProveedor(id); // LLama la funcion eliminar proveedor pasando el id.
                 LimpiarTabla();
                 ListarProveedor();
                 LimpiarProveedor();
             } else {
+                // Si el usuario no acepta eliminar aparecera el mensaje seleccione una fila.
                 JOptionPane.showMessageDialog(null, "Seleccione una fila");
             }
         }
@@ -1298,7 +1304,7 @@ public class Sistema extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         LimpiarTabla();
         ListarProveedor();
-        jTabbedPane1.setSelectedIndex(2);
+        jTabbedPane1.setSelectedIndex(2); // Se cambia la pestaña.
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
