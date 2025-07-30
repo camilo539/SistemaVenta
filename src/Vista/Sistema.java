@@ -6,11 +6,14 @@ package Vista;
 
 import Modelo.Cliente;
 import Modelo.ClienteDAO;
+import Modelo.Productos;
+import Modelo.ProductosDAO;
 import Modelo.Proveedor;
 import Modelo.ProveedorDAO;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 
 /**
@@ -25,11 +28,15 @@ public class Sistema extends javax.swing.JFrame {
     ClienteDAO client = new ClienteDAO();
     Proveedor pr = new Proveedor();
     ProveedorDAO PrDAO = new ProveedorDAO();
+    Productos pro = new Productos();
+    ProductosDAO  proDAO = new ProductosDAO();  
     DefaultTableModel modelo = new DefaultTableModel();
     public Sistema() {
         initComponents();
         this.setLocationRelativeTo(null); // Sirve para centrar el software.
         txtIdCliente.setVisible(false); // Vuelve invisible el textField.
+        AutoCompleteDecorator.decorate(cbxProveedorProducto); // Autocompletando el combo box de proveedores.
+        proDAO.ConsultarProveedor(cbxProveedorProducto); // Consultar proveedor.
     }
     
     public void ListarCliente () { // Metodo para no retornar ningun valor.
@@ -171,11 +178,11 @@ public class Sistema extends javax.swing.JFrame {
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
-        jTextField18 = new javax.swing.JTextField();
-        jTextField19 = new javax.swing.JTextField();
-        jTextField20 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txtCodigoProducto = new javax.swing.JTextField();
+        txtDescripcionProducto = new javax.swing.JTextField();
+        txtCantidadProducto = new javax.swing.JTextField();
+        txtPrecioProducto = new javax.swing.JTextField();
+        cbxProveedorProducto = new javax.swing.JComboBox<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
         jButton21 = new javax.swing.JButton();
@@ -238,6 +245,11 @@ public class Sistema extends javax.swing.JFrame {
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/producto.png"))); // NOI18N
         jButton4.setText("Productos");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/carrito.png"))); // NOI18N
         jButton5.setText("Ventas");
@@ -851,14 +863,14 @@ public class Sistema extends javax.swing.JFrame {
         jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel31.setText("PROVEEDOR:");
 
-        jTextField17.addActionListener(new java.awt.event.ActionListener() {
+        txtCodigoProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField17ActionPerformed(evt);
+                txtCodigoProductoActionPerformed(evt);
             }
         });
 
-        jComboBox1.setEditable(true);
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cbxProveedorProducto.setEditable(true);
+        cbxProveedorProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -878,6 +890,11 @@ public class Sistema extends javax.swing.JFrame {
         }
 
         jButton21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
+        jButton21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton21ActionPerformed(evt);
+            }
+        });
 
         jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Actualizar.png"))); // NOI18N
 
@@ -923,11 +940,11 @@ public class Sistema extends javax.swing.JFrame {
                             .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(52, 52, 52)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField17)
-                            .addComponent(jTextField18)
-                            .addComponent(jTextField19)
-                            .addComponent(jTextField20)
-                            .addComponent(jComboBox1, 0, 146, Short.MAX_VALUE)))
+                            .addComponent(txtCodigoProducto)
+                            .addComponent(txtDescripcionProducto)
+                            .addComponent(txtCantidadProducto)
+                            .addComponent(txtPrecioProducto)
+                            .addComponent(cbxProveedorProducto, 0, 146, Short.MAX_VALUE)))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel35, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -957,23 +974,23 @@ public class Sistema extends javax.swing.JFrame {
                 .addGap(54, 54, 54)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27)
-                    .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel28)
-                    .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDescripcionProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel29)
-                    .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCantidadProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel30)
-                    .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrecioProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel31)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxProveedorProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1169,7 +1186,7 @@ public class Sistema extends javax.swing.JFrame {
 
     private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
         
-        if (!"".equals(txtCedulaCliente.getText()) || !"".equals(txtNombreCliente.getText()) || !"".equals(txtTelefonoCliente.getText()) || !"".equals(txtDireccionCliente.getText())) {
+        if (!"".equals(txtCedulaCliente.getText()) && !"".equals(txtNombreCliente.getText()) && !"".equals(txtTelefonoCliente.getText()) && !"".equals(txtDireccionCliente.getText())) {
           cl.setCedula(Integer.parseInt(txtCedulaCliente.getText())); // Cambiando el valor a entero y verificandolo en la base de datos si esta correcto.
           cl.setNombre(txtNombreCliente.getText()); // Cambiando el valor a String y verificandolo en la base de datos si esta correcto.
           cl.setTelefono(txtTelefonoCliente.getText()); // Cambiando el valor a entero y verificandolo en la base de datos si esta correcto.
@@ -1191,9 +1208,9 @@ public class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCedulaProveedorActionPerformed
 
-    private void jTextField17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField17ActionPerformed
+    private void txtCodigoProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoProductoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField17ActionPerformed
+    }//GEN-LAST:event_txtCodigoProductoActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         LimpiarTabla(); 
@@ -1250,6 +1267,7 @@ public class Sistema extends javax.swing.JFrame {
                 cl.setDireccion(txtDireccionCliente.getText());
                 cl.setId(Integer.parseInt(txtIdCliente.getText()));
                 client.ModificarCliente(cl); // Pasando el objeto cl que contiene la informacion actualizada del cliente.
+                JOptionPane.showMessageDialog(null, "Cliente Registrado");
                 LimpiarTabla();
                 LimpiarCliente();
                 ListarCliente();
@@ -1267,7 +1285,7 @@ public class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoRegistroClienteActionPerformed
 
     private void btnGuardarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProveedorActionPerformed
-        if (!"".equals(txtCedulaProveedor.getText()) || !"".equals(txtNombreProveedor.getText()) || !"".equals(txtTelefonoProveedor.getText()) || !"".equals(txtDireccionProveedor.getText())) {
+        if (!"".equals(txtCedulaProveedor.getText()) && !"".equals(txtNombreProveedor.getText()) && !"".equals(txtTelefonoProveedor.getText()) && !"".equals(txtDireccionProveedor.getText())) {
           pr.setCedula(Integer.parseInt(txtCedulaProveedor.getText())); // Cambiando el valor a entero y verificandolo en la base de datos si esta correcto.
           pr.setNombre(txtNombreProveedor.getText()); // Cambiando el valor a String y verificandolo en la base de datos si esta correcto.
           pr.setTelefono(txtTelefonoProveedor.getText()); // Cambiando el valor a entero y verificandolo en la base de datos si esta correcto.
@@ -1331,6 +1349,7 @@ public class Sistema extends javax.swing.JFrame {
                 pr.setDireccion(txtDireccionProveedor.getText());
                 pr.setId(Integer.parseInt(txtIdProveedor.getText()));
                 PrDAO.ModificarProveedor(pr); // LLama la funcion modificar proveedor.
+                JOptionPane.showMessageDialog(null, "Proveedor Registrado");
                 LimpiarTabla();
                 ListarProveedor();
                 LimpiarProveedor();
@@ -1342,6 +1361,26 @@ public class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
         LimpiarProveedor();
     }//GEN-LAST:event_btnNuevoRegistroProveedorActionPerformed
+
+    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+        if (!"".equals(txtCodigoProducto.getText()) && !"".equals(txtDescripcionProducto.getText()) && !"".equals(txtCantidadProducto.getText()) && !"".equals(txtPrecioProducto.getText()) && !"".equals(cbxProveedorProducto.getSelectedItem())) {
+            pro.setCodigo(txtCodigoProducto.getText());
+            pro.setNombre(txtDescripcionProducto.getText());
+            pro.setStock(Integer.parseInt(txtCantidadProducto.getText()));
+            pro.setPrecio(Double.parseDouble(txtPrecioProducto.getText()));
+            pro.setProveedor(cbxProveedorProducto.getSelectedItem().toString());
+            proDAO.RegistrarProductos(pro);
+            JOptionPane.showMessageDialog(null, "Producto Registrado");
+        } else {
+            JOptionPane.showMessageDialog(null, "Los campos están vacíos.");
+        }
+    }//GEN-LAST:event_jButton21ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // Boton para entrar a la ventana de productos.
+        LimpiarTabla();
+        jTabbedPane1.setSelectedIndex(3);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1389,6 +1428,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardarProveedor;
     private javax.swing.JButton btnNuevoRegistroCliente;
     private javax.swing.JButton btnNuevoRegistroProveedor;
+    private javax.swing.JComboBox<String> cbxProveedorProducto;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
@@ -1402,7 +1442,6 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1462,10 +1501,6 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField19;
-    private javax.swing.JTextField jTextField20;
     private javax.swing.JTextField jTextField21;
     private javax.swing.JTextField jTextField22;
     private javax.swing.JTextField jTextField23;
@@ -1475,11 +1510,14 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JTable tableCliente;
     private javax.swing.JTable tableProveedor;
     private javax.swing.JTable tableVenta;
+    private javax.swing.JTextField txtCantidadProducto;
     private javax.swing.JTextField txtCantidadVenta;
     private javax.swing.JTextField txtCedulaCliente;
     private javax.swing.JTextField txtCedulaProveedor;
+    private javax.swing.JTextField txtCodigoProducto;
     private javax.swing.JTextField txtCodigoVenta;
     private javax.swing.JTextField txtDecscripcionVenta;
+    private javax.swing.JTextField txtDescripcionProducto;
     private javax.swing.JTextField txtDireccionCliente;
     private javax.swing.JTextField txtDireccionProveedor;
     private javax.swing.JTextField txtIdCliente;
@@ -1488,6 +1526,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombreCliente;
     private javax.swing.JTextField txtNombreClienteVenta;
     private javax.swing.JTextField txtNombreProveedor;
+    private javax.swing.JTextField txtPrecioProducto;
     private javax.swing.JTextField txtPrecioVenta;
     private javax.swing.JTextField txtStockDisponibleVenta;
     private javax.swing.JTextField txtTelefonoCliente;

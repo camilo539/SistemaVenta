@@ -13,7 +13,7 @@ public class ProveedorDAO {
     Connection con; // Variable de tipo Connection que se utilizará para establecer la conexión a la base de datos.
     ConexionMySQL cn = new ConexionMySQL(); // Se crea una instancia de la clase ConexionMySQL, que se utilizará para obtener la conexión a la base de datos.
     PreparedStatement ps; // Variable de tipo PreparedStatementque se utilizará para ejecutar consultas SQL.
-    ResultSet rs;
+    ResultSet rs; 
     
     public boolean RegistrarProveedor (Proveedor pr) {
         String sql = "INSERT INTO proveedor (cedula, nombre, telefono, direccion) VALUES (?,?,?,?)"; // La línea de código define una consulta SQL para insertar un nuevo registro en la tabla proveedor.
