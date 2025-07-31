@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JComboBox;
 
 public class ProductosDAO {
@@ -50,5 +52,34 @@ public class ProductosDAO {
             // Excepcion por si sale mal.
             System.out.println(e.toString());
         }
+    }
+    
+    public List ListarProductos () {
+        List<Productos> ListaPro = new ArrayList();
+        String sql = "SELECT * FROM productos";
+        try {
+            
+            // Conexion para la base de datos Productos.
+            
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                
+                // Ciclo para recorrer la lista de productos.
+                
+                Productos pro = new Productos();
+                pro.setId(rs.getInt("id"));
+                pro.setCodigo(rs.getString("codigo"));
+                pro.setNombre(rs.getString("nombre"));
+                pro.setProveedor(rs.getString("proveedor"));
+                pro.setStock(rs.getInt("stock"));
+                pro.setPrecio(rs.getDouble("precio"));
+                ListaPro.add(pro); // Agregando todos los datos a productos.
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString()); // Imprimir un error si falla el registro.
+        }
+        return ListaPro; // Retornando la lista productos.
     }
 }
